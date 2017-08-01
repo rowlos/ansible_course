@@ -1,0 +1,17 @@
+---
+
+- name: week2 play
+  hosts: cisco
+  vars:
+    creds:
+      host: "{{ ansible_host }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+  tasks:
+    - ios_facts:
+        provider: "{{ creds }}"
+      tags: facts_only 
+    - debug: 
+        msg: "{{ ansible_net_serialnum }}"
+
+    

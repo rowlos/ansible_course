@@ -1,0 +1,16 @@
+---
+
+- name: Print out variables
+  hosts: cisco:arista
+  vars:
+    dns1: 8.8.8.8
+    dns2: 8.8.4.4
+  vars_files:
+    - my_vars.yml
+  tasks:
+    - debug:
+        msg: "{{ dns1 }} "
+    - debug: 
+        msg: "{{ dns2 }}"
+    - debug: 
+        msg: "{{ ip_addr1 }}"

@@ -1,0 +1,19 @@
+---
+
+- name: Print Play
+  hosts: cisco
+  vars:
+    - ntp_server1: 10.10.10.10
+    - ntp_server2: 20.20.20.20 
+  tasks:
+    - debug:
+        msg: "{{ ansible_host }}"
+    - debug:
+        msg: "{{ local_as_number }}"
+    - debug:
+        msg: "{{ remote_as_number }}"
+    - debug:
+        msg: "{{ ntp_server1 }}"
+    - debug:
+        msg: "{{ ntp_server2 }}"
+
