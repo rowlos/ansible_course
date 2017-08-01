@@ -1,0 +1,36 @@
+---
+
+- name: week2 Exercise 3
+  hosts: cisco
+  vars:
+    creds:
+      host: "{{ ansible_host }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+  tasks:
+    - name: run multiple commands on remote nodes
+      ios_command:
+        provider: "{{ creds }}"
+        commands:
+          - show arp
+      register: show_arp
+    - name: Print show arp
+      debug:
+        var: show_arp
+   
+    - name: create a show arp fact
+      set_fact:
+        show_arp_new: "{{ show_arp.stdout_lines[0] }}"
+
+    - name: print fact to scree
+      debug:
+        var: show_arp_new
+    - name: only print gateway
+      debug:
+        var: item
+      with_items: "{{ show_arp_new }}"
+      when: "'10.220.88.1' in item"
+
+
+
+
