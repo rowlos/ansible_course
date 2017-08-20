@@ -1,0 +1,12 @@
+---
+
+#yaml file for the week3 exercises.
+- name: Week3_exercises
+  hosts: nxos
+  vars:
+    creds:
+      host: "{{ ansible_host }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+  tasks:
+    - nxos_vlan:

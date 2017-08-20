@@ -1,0 +1,68 @@
+- name: week5 play
+  hosts: cisco
+  vars:
+  tasks:
+    - name: Exercise 1
+      napalm_get_facts:
+        provider: "{{ creds }}"
+        filter: "lldp_neighbors"
+      #need a loop here that goes through the set facts or puts it as a dictionary.
+      set_fact:
+
+      #ansible assertion task here
+      assert:
+        that: lldp_info.hostname == "twb-sf-hpsw1"
+      tags:
+        - Ex1
+
+- name: Week 5 Exercise 2
+  hosts: nxos
+  tasks:
+    - name: Ex2A
+      napalm_install_config:
+        provider: "{{ creds }}"
+        config_file: "CFGS/{{ inventory_hostname }}-merge.txt"
+        commit_changes: True
+        replace_config: False
+        diff_file: "DIFS/{{ invetory_hostname }}_diff.txt"
+
+    - name: Ex2B
+      napalm_get_facts:
+        provider: "{{ creds }}"
+        filter: "interfaces_ip"
+      set_fact:
+
+      assert:
+        that:
+    - name: Ex3
+      napalm_install_config:
+        provider: "{{ creds }}"
+        config_file: "CFGS/{{ inventory_hostname }}_bgp.txt"
+        commit_changes: True
+        replace_config: False
+        diff_file: "DIFS/{{ invetory_hostname }}_diff.txt"
+    - name: Ex3b
+      napalm_get_facts:
+        provider: "{{ creds }}"
+        filter: "bgp_neighbors"
+
+
+
+- name: Week 5 Exercise 4
+  hosts: arista
+  tasks:
+    - name: Exercise 4a
+      napalm_install_config:
+        provider: "{{ creds }}"
+        config_file: "CFGS/{{ inventory_hostname }}_full.txt"
+        commit_changes: False
+        replace_config: True
+        diff_file: "DIFS/{{ inventory_hostname }}_diff.txt"
+      tag: Ex4a
+    - name: Exercise 4b
+      napalm_install_config:
+        provider: "{{ creds }}"
+        config_file: "CFGS/{{ inventory_hostname }}_smallchange.txt"
+        commit_changes: True
+        replace_config: True
+        diff_file: "DIFS/{{ inventory_hostname }}_diff.txt"
