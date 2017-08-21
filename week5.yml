@@ -1,13 +1,12 @@
 - name: week5 play
   hosts: cisco
-  vars:
   tasks:
     - name: Exercise 1
       napalm_get_facts:
         provider: "{{ creds }}"
         filter: "lldp_neighbors"
       #need a loop here that goes through the set facts or puts it as a dictionary.
-  - name: Exercise 1b
+    - name: Exercise 1b
       set_fact:
         lldp_info: "{{ napalm_lldp_neighbors[item][0] }}"
       with_items: "{{ napalm_lldp_neighbors }}"
